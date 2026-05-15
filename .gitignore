@@ -14,7 +14,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # OS generated files
-.DS_Store      # macOS
+/.DS_Store      # macOS
 .DS_Store?
 ._*
 .Spotlight-V100
