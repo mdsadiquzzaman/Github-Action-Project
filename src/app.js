@@ -3,6 +3,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const authRoutes = require('./routes/authRoutes');
 const itemRoutes = require('./routes/itemRoutes');
+const brandRoutes = require('./routes/brandRoutes');
 
 const app = express();
 
@@ -40,5 +41,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
-
+app.use('/api/brands', brandRoutes);
 module.exports = app;
