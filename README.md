@@ -1,4 +1,4 @@
-# Node.js CRUD API with Swagger
+# CRUD API with Swagger
 
 A robust RESTful API built with Node.js, Express, and MongoDB. Features include User Authentication (JWT), CRUD operations, Swagger API documentation, and a database seeding mechanism.
 
