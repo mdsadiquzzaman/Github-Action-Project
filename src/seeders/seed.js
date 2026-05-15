@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const User = require('../models/User');
 const Item = require('../models/Item');
-
-// Explicitly tell dotenv where the .env file is (two folders up from /seeders)
+const Brand = require('../models/Brand'); 
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const connectDB = async () => {
@@ -22,7 +21,7 @@ const seedData = async () => {
         // Clear existing data
         await User.deleteMany();
         await Item.deleteMany();
-
+        await Brand.deleteMany(); 
         // Seed Users
         const users = await User.insertMany([
             { name: 'Admin User', email: 'admin@example.com', password: '123456' },
@@ -36,9 +35,14 @@ const seedData = async () => {
             { name: 'Keyboard', description: 'Mechanical keyboard', price: 79.99 }
         ]);
 
+        // Seed Brands 
+        const brands = await Brand.insertMany([
+            { name: 'TechCorp', description: 'Leading tech gadgets', website: 'https://techcorp.com', country: 'USA' },
+            { name: 'AlphaWear', description: 'Premium accessories', website: 'https://alphawear.io', country: 'Germany' },
+            { name: 'ZenDevices', description: 'Eco-friendly electronics', country: 'Japan' }
+        ]);
+
         console.log('Data Seeded Successfully!');
-        console.log('Users:', users.map(u => `${u.name} - ${u.email}`).join(', '));
-        console.log('Items:', items.map(i => `${i.name} - $${i.price}`).join(', '));
         
         process.exit();
     } catch (error) {

@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.describe('Auth API', () => {
+test.describe.serial('Auth API', () => {
   test('POST /api/auth/register - should register a new user', async ({ request }) => {
     const response = await request.post('/api/auth/register', {
       data: {
@@ -23,7 +23,7 @@ test.describe('Auth API', () => {
       data: {
         name: 'Admin User',
         email: 'admin@example.com', // Already seeded
-        password: 'password123',
+        password: '123456',
       },
     });
 
@@ -34,8 +34,8 @@ test.describe('Auth API', () => {
   test('POST /api/auth/login - should login existing user', async ({ request }) => {
     const response = await request.post('/api/auth/login', {
       data: {
-        email: 'admin@example.com',
-        password: '123456',
+        email: 'test.user@example.com',
+        password: 'password123',
       },
     });
 

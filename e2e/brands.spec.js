@@ -1,6 +1,7 @@
-const { test, expect } = require('../e2e/fixtures');
+const { test, expect } = require('./fixtures');
 
-test.describe('Brands API (Protected)', () => {
+// Use .serial to run tests in sequence and share the createdBrandId variable
+test.describe.serial('Brands API (Protected)', () => {
   let createdBrandId;
 
   test('POST /api/brands - should create a new brand', async ({ authenticatedRequest }) => {
@@ -18,7 +19,9 @@ test.describe('Brands API (Protected)', () => {
 
     const body = await response.json();
     expect(body.name).toBe('E2E Brand Corp');
-    createdBrandId = body._id;
+    
+    // Assign to the variable defined in the describe block
+    createdBrandId = body._id; 
   });
 
   test('GET /api/brands - should return all brands', async ({ authenticatedRequest }) => {
@@ -31,6 +34,7 @@ test.describe('Brands API (Protected)', () => {
   });
 
   test('GET /api/brands/:id - should return a single brand', async ({ authenticatedRequest }) => {
+    // Now createdBrandId will be defined because the POST test ran first
     const response = await authenticatedRequest.get(`/api/brands/${createdBrandId}`);
 
     expect(response.ok()).toBeTruthy();
