@@ -1,0 +1,66 @@
+name: Node.js CI with MongoDB
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Set up a MongoDB service container
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd "mongosh --eval 'db.adminCommand(\"ping\")'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    strategy:
+      matrix:
+        node-version: [22.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    # Since .env is ignored by Git, we create it dynamically for the CI environment
+    - name: Create .env file
+      run: |
+        echo "PORT=3000" >> .env
+        echo "MONGO_URI=mongodb://127.0.0.1:27017/node_crud_api" >> .env
+        echo "JWT_SECRET=ci_test_secret_key" >> .env
+
+    # Running the seed proves the DB connection works and Mongoose models are valid
+    - name: Seed the Database
+      run: npm run seed
+
+    # Start the server in the background, wait for it, and test the Swagger endpoint
+    - name: Start Server and Test Endpoint
+      run: |
+        npm start &
+        sleep 5 # Give the server time to boot up
+        # Curl the Swagger docs endpoint to verify the Express server is running
+        STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/api-docs/)
+        if [ "$STATUS" -eq 200 ]; then
+          echo "✅ Server is running and Swagger UI is accessible!"
+          exit 0
+        else
+          echo "❌ Server failed to start, or Swagger UI is not accessible (Status: $STATUS)."
+          exit 1
+        fi
