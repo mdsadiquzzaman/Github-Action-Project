@@ -37,9 +37,9 @@ const seedData = async () => {
 
         // Seed Brands 
         const brands = await Brand.insertMany([
-            { name: 'TechCorp', description: 'Leading tech gadgets', website: 'https://techcorp.com', country: 'USA' },
-            { name: 'AlphaWear', description: 'Premium accessories', website: 'https://alphawear.io', country: 'Germany' },
-            { name: 'ZenDevices', description: 'Eco-friendly electronics', country: 'Japan' }
+            { name: 'TechCorp', description: 'Leading tech gadgets', website: 'https://techcorp.com', country: 'USA', location: 'Silicon Valley' },
+            { name: 'AlphaWear', description: 'Premium accessories', website: 'https://alphawear.io', country: 'Germany', location: 'Berlin' },
+            { name: 'ZenDevices', description: 'Eco-friendly electronics', country: 'Japan', location: 'Tokyo' }
         ]);
 
         console.log('Data Seeded Successfully!');

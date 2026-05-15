@@ -35,6 +35,8 @@ const { createBrand, getBrands, getBrandById, updateBrand, deleteBrand } = requi
  *                 type: string
  *               country:
  *                 type: string
+ *              location:   
+ *                type: string
  *     responses:
  *       201:
  *         description: Brand created
@@ -103,6 +105,8 @@ router.get('/:id', protect, getBrandById);
  *               website:
  *                 type: string
  *               country:
+ *                 type: string
+ *               location:
  *                 type: string
  *     responses:
  *       200:
