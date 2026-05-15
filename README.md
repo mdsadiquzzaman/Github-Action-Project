@@ -11,7 +11,7 @@ A robust RESTful API built with Node.js, Express, and MongoDB. Features include 
 
 ### 1. Clone the repository & navigate to the folder:
 ```bash
-cd node-crud-api
+cd Github-Action-Project
 ```
 
 ### 2. Install dependencies:
