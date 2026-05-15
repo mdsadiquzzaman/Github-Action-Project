@@ -32,7 +32,8 @@ const seedData = async () => {
         const items = await Item.insertMany([
             { name: 'Laptop', description: 'High performance laptop', price: 999.99 },
             { name: 'Mouse', description: 'Wireless mouse', price: 29.99 },
-            { name: 'Keyboard', description: 'Mechanical keyboard', price: 79.99 }
+            { name: 'Keyboard', description: 'Mechanical keyboard', price: 79.99 },
+            { name: 'soundbox', description: 'Eco-friendly sound system', price: 199.99 }
         ]);
 
         // Seed Brands 
