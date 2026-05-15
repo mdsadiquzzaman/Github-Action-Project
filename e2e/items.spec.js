@@ -1,6 +1,6 @@
-const { test, expect } = require('../e2e/fixtures');
+const { test, expect } = require('./fixtures');
 
-test.describe('Items API (Protected)', () => {
+test.describe.serial('Items API (Protected)', () => {
   let createdItemId;
 
   test('POST /api/items - should create a new item', async ({ authenticatedRequest }) => {
