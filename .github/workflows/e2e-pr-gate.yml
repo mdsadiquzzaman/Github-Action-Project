@@ -8,7 +8,6 @@ jobs:
   e2e-tests:
     runs-on: ubuntu-latest
 
-    # Start a MongoDB service container for the tests
     services:
       mongodb:
         image: mongo:7.0
@@ -45,15 +44,15 @@ jobs:
     - name: Seed the Database
       run: npm run seed
 
-    # This is the critical step. If this fails, the GitHub Action fails.
     - name: Run Playwright E2E Tests
       run: npm run test:e2e
 
-    # Upload the HTML report ONLY if tests fail so developers can debug
-    - name: Upload Playwright Report
+    - name: Upload Playwright Report & Failures
       uses: actions/upload-artifact@v4
-      if: failure()
+      if: ${{ !cancelled() }} # Runs even if the test step above fails (but not if user cancels)
       with:
-        name: playwright-report-failure
-        path: playwright-report/
-        retention-days: 7
+        name: playwright-e2e-report
+        path: |
+          playwright-report/      # The HTML report
+          test-results/           # Screenshots and videos
+        retention-days: 7         # Delete the artifact after 7 days to save space
