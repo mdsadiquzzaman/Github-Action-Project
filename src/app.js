@@ -41,5 +41,5 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/items', itemRoutes);
-app.use('/api/brands', brandRoutes);
+//app.use('/api/brands', brandRoutes);
 module.exports = app;
